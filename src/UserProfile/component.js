@@ -32,9 +32,7 @@ const KeyPairsEntity = ({keypairs_api, value, onUpdatePopup, onRequestDeleteKey}
 const KeyPairsEntities = ({values, keypairs_api, onUpdatePopup, onRequestDeleteKey}) => {
   return (
     <ul>
-      {values.length > 0 && <li>
-        <AccessKeyHeader>{constants.ACCESS_KEY_COLUMN}</AccessKeyHeader>
-      </li>}
+      {values.length > 0 && <AccessKeyHeader>{constants.ACCESS_KEY_COLUMN}</AccessKeyHeader>}
       {values.map((item) =>
         <KeyPairsEntity key={item.access_key} keypairs_api={keypairs_api}
                         value={item} onUpdatePopup={onUpdatePopup}

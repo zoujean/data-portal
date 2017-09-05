@@ -3,7 +3,7 @@ import LoadingSpinner from './component';
 import {LoadingSpinnerSVG, LoadingSpinnerWrap} from './style';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import { shallowWithStore } from '../setupJest';
+import { shallowWithStore } from '../testUtils';
 
 const middleware = [ thunk ];
 const mockStore = configureMockStore(middleware);
