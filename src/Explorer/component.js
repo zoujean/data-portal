@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {CheckBoxGroup} from '../components/CheckBox';
+import {StyledCheckBoxGroup} from '../components/CheckBox';
 import styled from 'styled-components';
 import 'react-table/react-table.css';
 import {Sidebar} from '../theme';
@@ -91,15 +91,15 @@ class ExplorerSidebar extends Component {
     console.log(this.props.selected_filters);
     return(
       <Sidebar>
-      <CheckBoxGroup listItems={projects} title="Projects"
+      <StyledCheckBoxGroup listItems={projects} title="Projects"
                      selected_items={this.props.selected_filters.projects}
                      group_name="projects"
                      onChange={(state) => this.props.onChange({...this.props.selected_filters, ...state})}/>
-      <CheckBoxGroup listItems={file_formats}
+      <StyledCheckBoxGroup listItems={file_formats}
                      selected_items={this.props.selected_filters.file_formats}
                      title="File Formats"
                      group_name="file_formats" onChange={(state) => this.props.onChange({...this.props.selected_filters, ...state})} />
-      <CheckBoxGroup listItems={file_types}
+      <StyledCheckBoxGroup listItems={file_types}
                      selected_items={this.props.selected_filters.file_types}
                      title="File Types"
                      group_name="file_types" onChange={(state) => this.props.onChange({...this.props.selected_filters, ...state})} />
