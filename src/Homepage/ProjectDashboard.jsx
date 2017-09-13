@@ -66,9 +66,9 @@ class CountCard extends React.Component {
         </h4>
         <ul>
           <li>
-            <Icon><i className="material-icons">face</i></Icon>
+            <Icon><i className="material-icons">account_circle</i></Icon>
             <Count>{ this.props.caseCount }</Count>
-            <span>account_circle</span>
+            <span>Cases</span>
           </li>
           <li>
             <Icon><i className="material-icons">receipt</i></Icon>
