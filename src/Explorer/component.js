@@ -43,7 +43,7 @@ class TableExplorer extends Component{
                 accessor: 'category'
               }
             ]}
-            defaultPageSize={10}
+            defaultPageSize={20}
             className="-striped -highlight"
           />
           <br />
@@ -161,7 +161,7 @@ class ExplorerComponent extends Component {
       submitted_aligned_reads: [],
       submitted_unaligned_reads: [],
       submitted_somatic_mutation: [],
-      submitted_methylation: [],
+      mri_result: [],
       submitted_copy_number: []
     };
 
@@ -174,7 +174,7 @@ class ExplorerComponent extends Component {
     const files3 = viewer.submitted_somatic_mutation.map( function(file) {
       return { project_id: file.project_id, name: file.file_name, category: file.data_category, format: file.data_format, size: file.file_size };
     });
-    const files4 = viewer.submitted_methylation.map( function(file) {
+    const files4 = viewer.mri_result.map( function(file) {
       return { project_id: file.project_id, name: file.file_name, category: file.data_category, format: file.data_format, size: file.file_size };
     });
     const files5 = viewer.submitted_copy_number.map( function(file) {
@@ -230,7 +230,7 @@ export const RelayExplorerComponent = Relay.createContainer(
                   data_type
                   file_size
               }
-              submitted_methylation(first: 10000, project_id: $selected_projects, data_type: $selected_file_types, data_format: $selected_file_formats) {
+              mri_result(first: 10000, project_id: $selected_projects, data_type: $selected_file_types, data_format: $selected_file_formats) {
                   project_id
                   file_name
                   data_category

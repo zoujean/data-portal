@@ -64,11 +64,11 @@ if (app === 'bpa') {
   graphql_schema_url = hostname + '/data/schema.json';
   appname = 'The Brain Commons Portal';
   nav_items = [
-    {'icon': 'fui-home', 'link': '/', 'color': '#A51C30'},
-    {'icon': 'fui-search', 'link': '/query', 'color': '#2D728F'},
-    {'icon': 'fui-bookmark', 'link': '/DD', 'color': '#A51C30'},
-    {'icon': 'fui-user', 'link': '/identity', 'color': '#2D728F'},
-    {'icon': 'fui-data', 'link': '/data', 'color': '#A51C30', 'name': 'data'}
+    {'icon': 'fui-home', 'link': '/', 'color': '#A51C30', 'name': 'home'},
+    {'icon': 'fui-search', 'link': '/query', 'color': '#2D728F', 'name': 'query'},
+    {'icon': 'fui-bookmark', 'link': '/DD', 'color': '#A51C30', 'name': 'dictionary'},
+    {'icon': 'fui-user', 'link': '/identity', 'color': '#2D728F', 'name': 'profile'},
+    {'icon': 'fui-data', 'link': '/data', 'color': '#a2a2a2', 'name': 'data'}
   ];
   login = {
     url: userapi_path + 'login/google' + '?redirect=',
