@@ -14,10 +14,19 @@ export const getSubmitPath = (project) => {
   return `${submissionApiPath}/${programName}/${projectCode}`;
 };
 
-export const jsonToString = (data) => {
+export const jsonToString = (data, schema={}) => {
   const replacer = (key, value) => {
     if (value === null) {
       return undefined;
+    }
+    if (schema[key] === "number"){
+      let castedValue = Number(value);
+      if (isNaN(castedValue)){
+        return value;
+      }
+      else {
+        return castedValue;
+      }
     }
     return value;
   };
