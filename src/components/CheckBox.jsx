@@ -28,24 +28,24 @@ export class CheckBoxGroup extends Component {
     onChange: PropTypes.func.isRequired,
     lastChild: PropTypes.bool,
   };
-  
+
   static defaultProps = {
     lastChild: false,
   };
   constructor(props) {
     super(props);
     this.state = {
-      collapsed: (props.listItems.length > 5) ? 1 : 0
+      collapsed: (props.listItems.length > 5) ? 1 : 0,
     };
   }
 
   onChangeBox = (item) => {
     const pos = this.props.selectedItems.indexOf(item);
     let selectedItems = [];
-    if (pos === -1) { 
+    if (pos === -1) {
       selectedItems = [...this.props.selectedItems, item];
-    } else { 
-      selectedItems = [...this.props.selectedItems.slice(0, pos), ...this.props.selectedItems.slice(pos + 1)]; 
+    } else {
+      selectedItems = [...this.props.selectedItems.slice(0, pos), ...this.props.selectedItems.slice(pos + 1)];
     }
     const state = { [this.props.group_name]: selectedItems };
     this.props.onChange(state);
@@ -54,7 +54,7 @@ export class CheckBoxGroup extends Component {
   render() {
     const selectedItems = this.props.selectedItems;
     // console.log(selectedItems);
-    let listItems = (this.state.collapsed === 1)
+    const listItems = (this.state.collapsed === 1)
       ? this.props.listItems.slice(0, 3)
       : this.props.listItems;
 
@@ -64,8 +64,10 @@ export class CheckBoxGroup extends Component {
         {listItems.map((item, i) => (
           <div key={i}>
             <input
-              type="checkbox" name={this.props.group_name}
-              value={item} id={item}
+              type="checkbox"
+              name={this.props.group_name}
+              value={item}
+              id={item}
               checked={selectedItems.includes(item)}
               onChange={() => this.onChangeBox(item)}
             />
@@ -74,10 +76,10 @@ export class CheckBoxGroup extends Component {
         ))}
         {
           (this.state.collapsed === 1) ?
-            <a href="#/" onClick={() => this.setState({collapsed: 2})}>{'More options'}</a>
+            <a href="#/" onClick={() => this.setState({ collapsed: 2 })}>{'More options'}</a>
             : ((this.state.collapsed === 2)
-            ? <a href="#/" onClick={() => this.setState({collapsed: 1})}>{'Fewer options'}</a>
-            : "")
+              ? <a href="#/" onClick={() => this.setState({ collapsed: 1 })}>{'Fewer options'}</a>
+              : '')
         }
       </CheckBox>
     );

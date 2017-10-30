@@ -59,17 +59,17 @@ export const Error = styled.h6`
 const Popup = ({ message, code, error, closeText, cancelText, confirmText,
   onClose, onCancel, onConfirm }) => (
   <PopupMask>
-    <PopupBox>
+      <PopupBox>
       <Message>
-        <div>{message}</div>
-        {code &&
+          <div>{message}</div>
+          {code &&
           <Code className="json"> {code} </Code>
         }
-        {error && <Error>Error</Error>}
-        {error &&
+          {error && <Error>Error</Error>}
+          {error &&
           <Code className="json"> {error} </Code>
         }
-      </Message>
+        </Message>
       {onClose &&
         <CancelButton onClick={onClose}>{closeText || 'close'}</CancelButton>
       }
@@ -80,7 +80,7 @@ const Popup = ({ message, code, error, closeText, cancelText, confirmText,
         <CancelButton onClick={onCancel}>{cancelText || 'cancel'}</CancelButton>
       }
     </PopupBox>
-  </PopupMask>
+    </PopupMask>
 );
 
 Popup.propTypes = {

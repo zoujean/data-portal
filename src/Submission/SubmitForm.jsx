@@ -229,7 +229,7 @@ class OneOfInput extends Component {
   }
 }
 
-const AnyOfInput = ({name, values, node, properties, required, requireds, onChange, onUpdateFormSchema }) => {
+const AnyOfInput = ({ name, values, node, properties, required, requireds, onChange, onUpdateFormSchema }) => {
   // this is smelly code because it reuses logic from SubmitNodeForm, 
   // I'd like to extract some of the code into another function
 

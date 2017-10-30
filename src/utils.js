@@ -14,19 +14,18 @@ export const getSubmitPath = (project) => {
   return `${submissionApiPath}/${programName}/${projectCode}`;
 };
 
-export const jsonToString = (data, schema={}) => {
+export const jsonToString = (data, schema = {}) => {
   const replacer = (key, value) => {
     if (value === null) {
       return undefined;
     }
-    if (schema[key] === "number"){
-      let castedValue = Number(value);
-      if (isNaN(castedValue)){
+    if (schema[key] === 'number') {
+      const castedValue = Number(value);
+      if (isNaN(castedValue)) {
         return value;
       }
-      else {
-        return castedValue;
-      }
+
+      return castedValue;
     }
     return value;
   };
@@ -47,23 +46,23 @@ export const predictFileType = (dirtyData, fileType) => {
   return predictType;
 };
 
-export const withBoxAndNav = (Component, background) => ({  ...props }) => {
+export const withBoxAndNav = (Component, background) => ({ ...props }) => {
   console.log(background);
   return (
     <div>
-    <Box>
-      <Nav />
-      <Body background={background}>
-        <Component {...props} />
-      </Body>
-      <Margin background={background}/>
-    </Box>
-    <Footer />
-  </div>
+      <Box>
+        <Nav />
+        <Body background={background}>
+          <Component {...props} />
+        </Body>
+        <Margin background={background} />
+      </Box>
+      <Footer />
+    </div>
 
-  )
-}
-  
+  );
+};
+
 
 export const withAuthTimeout = Component => ({ ...props }) => (
   <div>
@@ -94,7 +93,6 @@ export function asyncSetInterval(lambda, timeoutMs) {
     }, timeoutMs,
   );
 }
-
 
 
 export const color = {

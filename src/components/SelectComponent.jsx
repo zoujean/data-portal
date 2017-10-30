@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Select from 'react-select';
 
 
-const makeDefaultSelectedState = (value) => ({
-  selectedValue: value
+const makeDefaultSelectedState = value => ({
+  selectedValue: value,
 });
 
 export const SelectionDiv = styled.div`
@@ -33,21 +33,20 @@ export default class SelectComponent extends Component {
     onChange: PropTypes.func,
     defaultSelect: PropTypes.any,
     placeholder: PropTypes.string,
-    selectedValue: PropTypes.number
+    selectedValue: PropTypes.number,
   };
 
   static defaultProps = {
-    title: "",
+    title: '',
     values: [],
     placeholder: 'Select...',
     defaultSelect: 0,
     selectedValue: 0,
-    onChange: () => {}
+    onChange: () => {},
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.selectedValue !== nextProps.selectedValue)
-      this.setState({selectedValue: nextProps.selectedValue});
+    if (this.props.selectedValue !== nextProps.selectedValue) { this.setState({ selectedValue: nextProps.selectedValue }); }
   }
 
   constructor(props) {

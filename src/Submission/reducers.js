@@ -7,7 +7,7 @@ const submission = (state = {}, action) => {
   case 'UPDATE_FILE':
     return { ...state, file: action.file, file_type: action.file_type };
   case 'UPDATE_FORM_SCHEMA':
-    return { ...state, formSchema:  { ...state.formSchema, ...action.formSchema }};
+    return { ...state, formSchema: { ...state.formSchema, ...action.formSchema } };
   case 'RECEIVE_PROJECTS':
     return { ...state,
       projects: action.data.reduce((map, p) => { map[p.code] = p.project_id; return map; }, {}),
