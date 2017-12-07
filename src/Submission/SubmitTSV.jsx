@@ -14,6 +14,9 @@ import SubmissionResult from './SubmissionResult';
  * Manage TSV/JSON submission
  * 
  * @param {string} path usually just the project id
+ * @param submission
+ * @param onUploadClick
+ * @param onSubmitClick
  * @param {Function} onFileChange triggered when user edits something in tsv/json AceEditor
  */
 const SubmitTSV = ({ path, submission, onUploadClick, onSubmitClick, onFileChange }) => {

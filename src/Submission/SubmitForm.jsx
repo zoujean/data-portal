@@ -433,7 +433,7 @@ class SubmitForm extends Component {
         {(this.state.chosenNode.value !== null) && this.state.fill_form &&
         <div>
           <h5> Properties: </h5>
-          <RequiredNotification istext> * Denotes Required Property </RequiredNotification>
+          <RequiredNotification istext> * Denotes Required Property</RequiredNotification>
           <br />
           <SubmitNodeForm
             node={node}

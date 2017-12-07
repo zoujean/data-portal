@@ -23,6 +23,14 @@ export const updateFileContent = (value, fileType) => (dispatch) => {
   dispatch({ type: 'UPDATE_FILE', file: value, file_type: predictFileType(value, fileType) });
 };
 
+export const submitAndUpdate = (type, project, dictionary) => (dispatch, getState) => {
+  return dispatch(submitToServer())
+    .then(
+      () => {
+        // Update node counts in redux
+        dispatch(getCounts(type, project, dictionary));
+      })
+};
 
 const submitToServer = (methodIn = 'PUT') => (dispatch, getState) => {
   const path = getState().routing.locationBeforeTransitions.pathname.split('-');
@@ -90,24 +98,23 @@ export const loginSubmissionAPI = () =>
       }
 
       return Promise.resolve();
-    })
-      .then(() => dispatch(fetchOAuthURL(submissionApiOauthPath)))
+    }).then(() => dispatch(fetchOAuthURL(submissionApiOauthPath)))
       .then(oauthUrl => fetchJsonOrText({ path: oauthUrl, dispatch }))
       .then(
         ({ status, data }) => {
           switch (status) {
-          case 200:
-            return {
-              type: 'RECEIVE_SUBMISSION_LOGIN',
-              result: true,
-            };
-          default: {
-            return {
-              type: 'RECEIVE_SUBMISSION_LOGIN',
-              result: false,
-              error: data,
-            };
-          }
+            case 200:
+              return {
+                type: 'RECEIVE_SUBMISSION_LOGIN',
+                result: true,
+              };
+            default: {
+              return {
+                type: 'RECEIVE_SUBMISSION_LOGIN',
+                result: false,
+                error: data,
+              };
+            }
           }
         },
       )
@@ -131,12 +138,7 @@ const ReduxSubmitTSV = (() => {
   const mapDispatchToProps = dispatch => ({
     onUploadClick: (value, type) => dispatch(uploadTSV(value, type)),
     onSubmitClick: (type, project, dictionary) =>
-      dispatch(submitToServer())
-        .then(
-          () => {
-            // Update node counts in redux
-            dispatch(getCounts(type, project, dictionary));
-          }),
+      dispatch(submitAndUpdate(type, project, dictionary)),
     onFileChange: value => dispatch(updateFileContent(value)),
   });
 
