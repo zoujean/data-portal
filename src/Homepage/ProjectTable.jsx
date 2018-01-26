@@ -29,7 +29,7 @@ export const TableRow = styled.tr`
   color: #222;
   ${
   props => (props.summaryRow ? `
-      background-color: #eeeeee;
+      background-color: #DFDFDF;
       ` : '')
 }
 `;
@@ -50,7 +50,7 @@ export const TableColLabel = styled.th`
 
 class SubmitButton extends React.Component {
   render() {
-    return <Link to={this.props.projName} title="Submit Data"><FlatButton backgroundColor="#dddddd" label="Submit Data" /></Link>;
+    return <Link to={this.props.projName} title="Submit Data"><FlatButton backgroundColor="#DFDFDF" label="Submit Data" /></Link>;
   }
 }
 

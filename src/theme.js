@@ -9,7 +9,7 @@ export const theme = {
   tomato: '#F06449',
   main: 'mediumseagreen',
   color_primary: '#800000',
-  color_secondary: '#008000',
+  color_secondary: '#0D99B7',
   color_secondary_fade: '#159915',
   color_tertiary: '#f1b13c',
   light_gray: '#f3f3f3',
@@ -65,7 +65,7 @@ export const Margin = styled.div`
   width: 100%;
 `;
 
-export const TableBarColor = '#7d7474';
+export const TableBarColor = '#CC3399';
 
 export const Table = styled.table`
   table-layout:auto;

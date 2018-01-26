@@ -47,12 +47,12 @@ class ProjectBarChart extends React.Component {
             layout="horizontal"
           >
             <h4>Project Submission status</h4>
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis dataKey="name" stroke="#DFDFDF" fill="#DFDFDF" />
+            <YAxis stroke="#DFDFDF" fill="#DFDFDF" />
             <Tooltip />
             <Legend />
-            <Bar dataKey="caseCount" stackId="a" fill="#8884d8" />
-            <Bar dataKey={tor.translate('experimentCount')} stackId="a" fill="#82ca9d" />
+            <Bar dataKey="caseCount" stackId="a" fill="#00ADEE" />
+            <Bar dataKey={tor.translate('experimentCount')} stackId="a" fill="#BE1E2D" />
           </BarChart>
         </ResponsiveContainer>
       </FloatBox>

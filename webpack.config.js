@@ -14,6 +14,7 @@ const title = {
   acct: 'ACCOuNT Data Commons',
   gdc: 'Jamboree Data Access',
   bhc: 'Brain Commons',
+  kf: 'Kids First Data Coordinating Center Portal',
 }[app];
 
 const plugins = [

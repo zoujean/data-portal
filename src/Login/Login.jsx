@@ -28,6 +28,7 @@ const Login = (props) => {
   return (
     <div>
       <CentralBox>
+        <img src={'/src/img/kf-header.png'} />
         <h3 className="article">{appname}</h3>
         <LoginButton className="btn btn-primary navbar-btn btn-sm login-button" href={login.url + window.location.origin + next}>{login.title}</LoginButton>
       </CentralBox>

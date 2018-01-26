@@ -13,7 +13,7 @@ const NavLeft = styled.nav`
 const Header = styled.header`
   width: 100%;
   background-color: white;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  border-bottom: 3px solid #DFDFDF;
   padding: 10px 100px;
   overflow: hidden;
 `;
@@ -49,7 +49,7 @@ const NavBar = ({ navItems, user, onLogoutClick }) => (
         navItems.map(
           (item, i) => (
             <NavItem key={i} to={item.link}>
-              <FlatButton label={item.name}>
+              <FlatButton label={item.name} style={{color: 'inherit'}}>
                 <NavIcon className="material-icons">{item.icon}</NavIcon>
               </FlatButton>
             </NavItem>

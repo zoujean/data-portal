@@ -13,9 +13,9 @@ const CountBox = styled.div`
   float: left;
   width: 30%;
   height: 280px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 10px, rgba(0, 0, 0, 0.23) 0px 3px 10px;
   padding: 30px;
-  border-top: 3px solid #c87152;
+  border: 2px solid #DFDFDF;
+  border-top: 3px solid #F6921E;
   min-width:300px;
   h4 {
     margin-top: 0px;
@@ -33,7 +33,7 @@ const CountBox = styled.div`
 `;
 
 const Count = styled.span`
-  color: #ff4200;
+  color: #F6921E;
   margin-right: 10px;
 `;
 
@@ -43,7 +43,7 @@ const DashTopDiv = styled.div`
 `;
 
 const Icon = styled.div`
-  color: #008000;
+  color: #00ADEE;
   height: 24px;
   margin-top: 10px;
   margin-left: 20px;
