@@ -135,6 +135,10 @@ function buildConfig(opts) {
     ];
   } else if (app === 'kf') {
     appname = 'Gabriella Miller Kids First Pediatric Data Coordinating Center Portal';
+    login = {
+      url: `${userapiPath}login/fence?redirect=`,
+      title: 'Login from NIH',
+    };
     navItems = [
       { icon: 'home', link: '/', color: '#A51C30', name: 'home' },
       { icon: 'search', link: '/query', color: '#2D728F', name: 'query' },
