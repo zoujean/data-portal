@@ -28,7 +28,6 @@ const Login = (props) => {
         <h3 className="article">{appname}</h3>
         <LoginButton className="btn btn-primary navbar-btn btn-sm login-button" href={login.url + location.origin + next}>{login.title}</LoginButton>
       </CentralBox>
-      <Footer />
     </div>
   );
 };

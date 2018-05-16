@@ -29,7 +29,7 @@ function buildConfig(opts) {
   const apiPath = `${hostname}api/`;
   const submissionApiOauthPath = `${hostname}api/v0/oauth2/`;
   // let credentialOauthPath = `${hostname}middleware/oauth2/v0/`;
-  const credentialCdisPath = `${userapiPath}credentials/cdis/`;
+  let credentialCdisPath = `${userapiPath}credentials/pdc-cleversafe/`;
   const graphqlPath = `${hostname}api/v0/submission/graphql/`;
   let login = {
     url: `${userapiPath}login/google?redirect=`,
@@ -130,7 +130,20 @@ function buildConfig(opts) {
       { icon: 'home', link: '/', color: '#a2a2a2', name: 'home' },
     ];
     login = {
-      url: 'https://itrusteauth.nih.gov/affwebservices/public/saml2sso?SPID=https://bionimbus-pdc.opensciencedatacloud.org/shibboleth&RelayState=',
+      url: 'https://auth.nih.gov/affwebservices/public/saml2sso?SPID=https://bionimbus-pdc.opensciencedatacloud.org/shibboleth&RelayState=',
+      title: 'Login from NIH',
+    };
+  } else if (app === 'pdc') {
+    userapiPath = `${hostname}api/`;
+    credentialCdisPath = `${userapiPath}credentials/pdc-cleversafe/`;
+    // credentialPath = `${userapiPath}credentials/cleversafe/`;
+    // credentialOauthPath = `${userapiPath}oauth2/`;
+    appname = 'Bionimbus Data Portal';
+    navItems = [
+      { icon: 'home', link: '/', color: '#a2a2a2', name: 'home' },
+    ];
+    login = {
+      url: 'https://auth.nih.gov/affwebservices/public/saml2sso?SPID=https://bionimbus-pdc.opensciencedatacloud.org/shibboleth&RelayState=',
       title: 'Login from NIH',
     };
   } else {

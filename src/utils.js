@@ -55,7 +55,6 @@ export const withBoxAndNav = (Component, background) => ({ ...props }) => {
         </Body>
         <Margin background={background} />
       </Box>
-      <Footer />
     </OuterWrapper>
 
   );

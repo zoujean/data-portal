@@ -6,7 +6,7 @@ import { submissionApiOauthPath, credentialCdisPath } from '../localconf';
 import { fetchProjects } from '../queryactions';
 
 
-const fetchAccess = () =>
+export const fetchAccess = () =>
   dispatch =>
     fetchJsonOrText({
       path: credentialCdisPath,

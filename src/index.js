@@ -48,7 +48,7 @@ async function init() {
 
   const history = syncHistoryWithStore(browserHistory, store);
   history.listen(location => console.log(location.pathname));
-  if (app !== 'gdc') {
+  if (!['gdc', 'pdc'].includes(app)) {
     render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
@@ -128,6 +128,7 @@ async function init() {
     render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
+          <MuiThemeProvider>
           <Router history={history}>
             <Route path="/login" component={Login} />
             <Route
@@ -136,6 +137,7 @@ async function init() {
               component={withBoxAndNav(withAuthTimeout(UserProfile))}
             />
           </Router>
+          </MuiThemeProvider>
         </ThemeProvider>
       </Provider>,
       document.getElementById('root'),

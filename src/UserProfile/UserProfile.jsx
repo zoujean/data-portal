@@ -171,6 +171,9 @@ const UserProfile = ({ user, userProfile, popups, submission, onCreateKey,
   const onCreate = () => {
     onCreateKey(credentialCdisPath);
   };
+  console.log(user);
+  console.log(user.project_access);
+  console.log(userProfile);
   const accessibleProjects = Object.keys(user.project_access);
   return (
     <div>
@@ -250,19 +253,12 @@ const UserProfile = ({ user, userProfile, popups, submission, onCreateKey,
               (<li key={p}>
                 <Bullet>
                   {
-                    p in submission.projects &&
-                    <ProjectCell to={`/${submission.projects[p]}`}>
-                      {p}
-                    </ProjectCell>
-                  }
-                  {
-                    !(p in submission.projects) &&
                     <ProjectCell>
                       {p}
                     </ProjectCell>
                   }
                   <RightCell>
-                    {user.project_access[p].join(', ')}
+                    {user.project_access[p].join(', ').replace('read-storage', 'download').replace('READ', 'download')}
                   </RightCell>
                 </Bullet>
               </li>),
