@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Arranger } from '@arranger/components/dist/Arranger';
+import Arranger from './Arranger';
+import defaultApi from './api';
 import { AggsState, AggsQuery } from '@arranger/components/dist/Aggs';
 
 /*
@@ -36,15 +37,18 @@ class ArrangerWrapper extends React.Component {
   render() {
     return (
       <Arranger
+        api={defaultApi}
         index={this.props.index}
         graphqlField={this.props.graphqlField}
         projectId={this.props.projectId}
-        render={arrangerArgs => (
+        render={arrangerArgs => {
+          return (
           <AggsState
             {...arrangerArgs}
+            api={defaultApi}
             render={stateArgs => (
               <AggsQuery
-                api={arrangerArgs.api}
+                api={defaultApi}
                 debounceTime={300}
                 projectId={arrangerArgs.projectId}
                 index={arrangerArgs.graphqlField}
@@ -58,7 +62,7 @@ class ArrangerWrapper extends React.Component {
               />
             )}
           />
-        )}
+        )}}
       />
     );
   }
