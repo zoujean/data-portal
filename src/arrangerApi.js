@@ -20,7 +20,7 @@ export const getCookie = name => {
 const alwaysSendHeaders = { 'Content-Type': 'application/json' };
 const csrf = getCookie('csrf');
 const accessToken = sessionStorage.getItem('token');
-const tokenHeaders = { 'Authorization': `bearer ${accessToken}` };
+const tokenHeaders = { 'X-CSRF-Token': csrf, 'Authorization': `bearer ${accessToken}` };
 let urls = {
   bhc: 'https://qa-brain.planx-pla.net/api/v0/flat-search',
   default: 'https://abby.planx-pla.net/api/v0/flat-search',
