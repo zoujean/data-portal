@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Arranger } from '@arranger/components/dist/Arranger';
 import { AggsState, AggsQuery } from '@arranger/components/dist/Aggs';
 import defaultApi from '../arrangerApi';
+import { paramByApp } from '../../data/dictionaryHelper';
+import { params } from '../../data/parameters';
 
 /*
 * The ArrangerWrapper component can be used to get props and data from Arranger
@@ -35,6 +37,12 @@ class ArrangerWrapper extends React.Component {
   );
 
   render() {
+    const arrangerConfig = paramByApp(params, 'arrangerConfig');
+    console.log('arrangerConfig', arrangerConfig)
+    const aggregationConfig = arrangerConfig ? arrangerConfig.filters : null;
+    console.log('aggConfig', aggregationConfig)
+    const fields = aggregationConfig ? aggregationConfig.tabs.map(tab => tab.fields).flat() : [];
+    console.log('fields from wrapper', fields);
     return (
       <Arranger
         index={this.props.index}
@@ -45,21 +53,25 @@ class ArrangerWrapper extends React.Component {
           <AggsState
             {...arrangerArgs}
             api={defaultApi}
-            render={stateArgs => (
-              <AggsQuery
-                api={defaultApi}
-                debounceTime={300}
-                projectId={arrangerArgs.projectId}
-                index={arrangerArgs.graphqlField}
-                sqon={arrangerArgs.sqon}
-                aggs={stateArgs.aggs.filter(agg => agg.field !== 'name')}
-                render={({ data }) => (
-                  <React.Fragment>
-                    {this.renderComponent({ ...arrangerArgs, arrangerData: data })}
-                  </React.Fragment>
-                )}
-              />
-            )}
+            render={stateArgs => {
+              console.log('stateArgs prefilter', stateArgs.aggs)
+              console.log('stateArgs', stateArgs.aggs.filter(agg => fields.includes(agg.field)));
+              return (
+                <AggsQuery
+                  api={defaultApi}
+                  debounceTime={300}
+                  projectId={arrangerArgs.projectId}
+                  index={arrangerArgs.graphqlField}
+                  sqon={arrangerArgs.sqon}
+                  aggs={stateArgs.aggs.filter(agg => agg.field !== 'name' && fields.includes(agg.field))}
+                  render={({ data }) => (
+                    <React.Fragment>
+                      {this.renderComponent({ ...arrangerArgs, arrangerData: data })}
+                    </React.Fragment>
+                  )}
+                />
+              )
+            }}
           />
         )}
       />

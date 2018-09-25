@@ -10,6 +10,7 @@ const commonNames = {
   kf: 'Kids First',
   kfDcfInterop: 'Pediatric Cancer Commons Pilot',
   ndh: 'NIAID',
+  pcc: 'Pediatrics Cancer Commons',
   default: 'Generic',
 };
 
@@ -1524,6 +1525,81 @@ const params = {
     },
     featureFlags: {
       explorer: false,
+    },
+  },
+  pcc: {
+    components: {
+      appName: 'Pediatrics Cancer Commons',
+      index: {
+        introduction: {
+          heading: 'Pediactrics Cancer Commons Commons',
+          text: 'Introduction text',
+          link: '/submission',
+        },
+        buttons: [
+          {
+            name: 'Explore Data',
+            icon: 'data-explore',
+            body: 'The Exploration Page gives you insights and a clear overview under selected factors.',
+            link: '/explorer',
+            label: 'Explore data',
+          },
+        ],
+      },
+      navigation: {
+        title: 'Pediatrics Cancer Commons',
+        items: [
+          {
+            icon: 'exploration',
+            link: '/explorer',
+            color: '#a2a2a2',
+            name: 'Exploration',
+          },
+        ],
+      },
+      login: {
+        title: 'Pediatrics Cancer Commons',
+        subTitle: 'search, compare, and download data',
+        text: 'This website provides a centralized, cloud-based discovery portal for the brain health research community and aims to accelerate discovery and development of therapies, diagnostic tests, and other technologies for the treatment and prevention of diseases impacting the brain.',
+        contact: 'If you have any questions about access or the registration process, please contact ',
+        email: 'support@datacommons.io',
+      },
+    },
+    featureFlags: {
+      explorer: true,
+    },
+    arrangerConfig: {
+      charts: {
+        project_id: {
+          chartType: 'count',
+          title: 'Projects',
+        },
+        gender: {
+          chartType: 'pie',
+          title: 'Gender',
+        },
+        race: {
+          chartType: 'bar',
+          title: 'Race',
+        },
+        ethnicity: {
+          chartType: 'bar',
+          title: 'Ethnicity',
+        },
+      },
+      filters: {
+        tabs: [{
+          title: 'Case',
+          fields: [
+            'race',
+            'ethnicity',
+            'gender',
+          ],
+        }],
+      },
+      projectId: 'search',
+      graphqlField: 'case',
+      index: '',
     },
   },
   default: {

@@ -25,88 +25,93 @@ BaseWrapper.defaultProps = {
   className: '',
 };
 
-const AggregationTabs = ({
-  filterConfig,
-  onTermSelected = () => {},
-  setSQON,
-  sqon,
-  projectId,
-  graphqlField,
-  className = '',
-  style,
-  api,
-  Wrapper = BaseWrapper,
-  containerRef,
-  componentProps = {
-    getTermAggProps: () => ({}),
-    getRangeAggProps: () => ({}),
-    getBooleanAggProps: () => ({}),
-    getDatesAggProps: () => ({}),
-  },
-}) => (
-  <Wrapper style={style} className={className}>
-    <AggsState
-      api={api}
-      projectId={projectId}
-      graphqlField={graphqlField}
-      render={(aggsState) => {
-        const aggs = aggsState.aggs.filter(x => x.show);
-        // Dividing data into tabs
-        const tabs = [];
-        filterConfig.tabs.forEach((tab, i) => {
-          const sections = [];
-          tab.fields.forEach((field) => {
-            const section = aggs.find(agg => agg.field === field);
-            if (section) {
-              sections.push(section);
-            }
-          });
-          tabs.push(
-            /* eslint-disable */
-            <AggsQuery
-              key={i}
-              api={api}
-              debounceTime={300}
-              projectId={projectId}
-              index={graphqlField}
-              sqon={sqon}
-              aggs={sections}
-              render={({ data }) =>
-                data &&
-                aggs
-                  .map(agg => ({
-                    ...agg,
-                    ...data[graphqlField].aggregations[agg.field],
-                    ...data[graphqlField].extended.find(
-                      x => x.field.replace(/\./g, '__') === agg.field,
-                    ),
-                    onValueChange: ({ sqon, value }) => {
-                      onTermSelected(value);
-                      setSQON(sqon);
-                    },
-                    key: agg.field,
-                    sqon,
-                    containerRef,
-                  }))
-                  .map((agg) => {
-                    if (aggComponents[agg.type]) {
-                      return (aggComponents[agg.type]({ ...agg, ...componentProps }));
-                    }
-                    return null;
-                  })
-              }
-            />,
-            /* eslint-enable */
-          );
-        });
-        return (
-          <FilterGroup tabs={tabs} filterConfig={filterConfig} />
-        );
-      }
-      }
-    />
-  </Wrapper>
-);
+class AggregationTabs extends React.Component {
+  render() {
+    const {
+      filterConfig,
+      onTermSelected,
+      setSQON,
+      sqon,
+      projectId,
+      graphqlField,
+      className,
+      style,
+      api,
+      Wrapper,
+      containerRef,
+      componentProps
+    } = this.props;
+    return (
+      <Wrapper style={style} className={className}>
+        <AggsState
+          api={api}
+          projectId={projectId}
+          graphqlField={graphqlField}
+          render={(aggsState) => {
+            const configFields = filterConfig.tabs.map(tab => tab.fields).flat();
+            console.log('configFields', configFields);
+            console.log('aggsState.aggs', aggsState.aggs);
+            const aggs = aggsState.aggs.filter(x => x.show && configFields.includes(x.field));
+            console.log('setting aggs', aggs)
+            // Dividing data into tabs
+            const tabs = [];
+            filterConfig.tabs.forEach((tab, i) => {
+              const sections = [];
+              tab.fields.forEach((field) => {
+                const section = aggs.find(agg => agg.field === field);
+                if (section) {
+                  sections.push(section);
+                }
+              });
+              console.log('aggs passed will be', sections);
+              tabs.push(
+                /* eslint-disable */
+                <AggsQuery
+                  key={i}
+                  api={api}
+                  debounceTime={300}
+                  projectId={projectId}
+                  index={graphqlField}
+                  sqon={sqon}
+                  aggs={sections}
+                  render={({ data }) =>
+                    data &&
+                    aggs
+                      .map(agg => ({
+                        ...agg,
+                        ...data[graphqlField].aggregations[agg.field],
+                        ...data[graphqlField].extended.find(
+                          x => x.field.replace(/\./g, '__') === agg.field,
+                        ),
+                        onValueChange: ({ sqon, value }) => {
+                          onTermSelected(value);
+                          setSQON(sqon);
+                        },
+                        key: agg.field,
+                        sqon,
+                        containerRef,
+                      }))
+                      .map((agg) => {
+                        if (aggComponents[agg.type]) {
+                          return (aggComponents[agg.type]({ ...agg, ...componentProps }));
+                        }
+                        return null;
+                      })
+                  }
+                />,
+                /* eslint-enable */
+              );
+            });
+            return (
+              <FilterGroup tabs={tabs} filterConfig={filterConfig} />
+            );
+          }
+          }
+        />
+      </Wrapper>
+    );
+  }
+};
 
 AggregationTabs.propTypes = {
   className: PropTypes.string,
@@ -130,7 +135,12 @@ AggregationTabs.defaultProps = {
   style: null,
   Wrapper: BaseWrapper,
   containerRef: null,
-  componentProps: null,
+  componentProps: {
+    getTermAggProps: () => ({}),
+    getRangeAggProps: () => ({}),
+    getBooleanAggProps: () => ({}),
+    getDatesAggProps: () => ({}),
+  },
 };
 
 export default AggregationTabs;
