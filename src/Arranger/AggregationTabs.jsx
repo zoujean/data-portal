@@ -49,10 +49,8 @@ class AggregationTabs extends React.Component {
           graphqlField={graphqlField}
           render={(aggsState) => {
             const configFields = filterConfig.tabs.map(tab => tab.fields).flat();
-            console.log('configFields', configFields);
-            console.log('aggsState.aggs', aggsState.aggs);
             const aggs = aggsState.aggs.filter(x => x.show && configFields.includes(x.field));
-            console.log('setting aggs', aggs)
+            console.log('Updated aggregations', aggs)
             // Dividing data into tabs
             const tabs = [];
             filterConfig.tabs.forEach((tab, i) => {
@@ -63,7 +61,7 @@ class AggregationTabs extends React.Component {
                   sections.push(section);
                 }
               });
-              console.log('aggs passed will be', sections);
+              console.log('Aggs passed will be', sections);
               tabs.push(
                 /* eslint-disable */
                 <AggsQuery
