@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from '@arranger/components/dist/Arranger';
 import './DataExplorerTable.less';
+import { fetchData } from '../../../arrangerApi';
 
 class DataExplorerTable extends React.Component {
   render() {
@@ -10,6 +11,7 @@ class DataExplorerTable extends React.Component {
         <div className='data-explorer-table__arranger-table'>
           <Table
             {...this.props}
+            fetchData={fetchData}
             allowTSVExport={false}
             allowTogglingColumns={false}
             customActions={this.props.customActions}

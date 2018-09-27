@@ -1591,6 +1591,7 @@ const params = {
         tabs: [{
           title: 'Case',
           fields: [
+            'project_id',
             'race',
             'ethnicity',
             'gender',

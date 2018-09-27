@@ -50,7 +50,6 @@ class AggregationTabs extends React.Component {
           render={(aggsState) => {
             const configFields = filterConfig.tabs.map(tab => tab.fields).flat();
             const aggs = aggsState.aggs.filter(x => x.show && configFields.includes(x.field));
-            console.log('Updated aggregations', aggs)
             // Dividing data into tabs
             const tabs = [];
             filterConfig.tabs.forEach((tab, i) => {
@@ -61,7 +60,6 @@ class AggregationTabs extends React.Component {
                   sections.push(section);
                 }
               });
-              console.log('Aggs passed will be', sections);
               tabs.push(
                 /* eslint-disable */
                 <AggsQuery

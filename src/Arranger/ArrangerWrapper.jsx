@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Arranger } from '@arranger/components/dist/Arranger';
 import { AggsState, AggsQuery } from '@arranger/components/dist/Aggs';
-import defaultApi from '../arrangerApi';
+import { api } from '../arrangerApi';
 import { paramByApp } from '../../data/dictionaryHelper';
 import { params } from '../../data/parameters';
 
@@ -38,37 +38,34 @@ class ArrangerWrapper extends React.Component {
 
   render() {
     const arrangerConfig = paramByApp(params, 'arrangerConfig');
-    console.log('arrangerConfig', arrangerConfig)
     const aggregationConfig = arrangerConfig ? arrangerConfig.filters : null;
-    console.log('aggConfig', aggregationConfig)
     const fields = aggregationConfig ? aggregationConfig.tabs.map(tab => tab.fields).flat() : [];
-    console.log('fields from wrapper', fields);
     return (
       <Arranger
         index={this.props.index}
         graphqlField={this.props.graphqlField}
         projectId={this.props.projectId}
-        api={defaultApi}
+        api={api}
         render={arrangerArgs => (
           <AggsState
             {...arrangerArgs}
-            api={defaultApi}
+            api={api}
             render={stateArgs => {
-              console.log('stateArgs prefilter', stateArgs.aggs)
-              console.log('stateArgs', stateArgs.aggs.filter(agg => fields.includes(agg.field)));
               return (
                 <AggsQuery
-                  api={defaultApi}
+                  api={api}
                   debounceTime={300}
                   projectId={arrangerArgs.projectId}
                   index={arrangerArgs.graphqlField}
                   sqon={arrangerArgs.sqon}
                   aggs={stateArgs.aggs.filter(agg => agg.field !== 'name' && fields.includes(agg.field))}
-                  render={({ data }) => (
+                  render={({ data }) => {
+                    console.log('data', data)
+                    return (
                     <React.Fragment>
                       {this.renderComponent({ ...arrangerArgs, arrangerData: data })}
                     </React.Fragment>
-                  )}
+                  )}}
                 />
               )
             }}
