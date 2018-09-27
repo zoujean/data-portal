@@ -1522,6 +1522,10 @@ const params = {
           chartType: 'count',
           title: 'Projects',
         },
+        submitter_id: {
+          chartType: 'count',
+          title: 'Subjects',
+        },
         gender: {
           chartType: 'pie',
           title: 'Gender',
@@ -1531,7 +1535,7 @@ const params = {
           title: 'Race',
         },
         ethnicity: {
-          chartType: 'stackedBar',
+          chartType: 'bar',
           title: 'Ethnicity',
         }
       },
@@ -1539,17 +1543,23 @@ const params = {
         tabs: [{
           title: 'Subject',
           fields: [
+            'project_id',
             'gender',
             'race',
             'ethnicity',
             'vital_status',
-            'year_of_birth',
+            'frstdthd',
           ],
         },
         {
           title: 'Diagnosis',
           fields: [
+            'arthxbase',
+            'bshbvstat',
+            'cd4nadir',
+            'status',
             'virus_type',
+            'virus_subtype',
           ],
         }],
       },
