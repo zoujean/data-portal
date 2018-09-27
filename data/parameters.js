@@ -1556,6 +1556,7 @@ const params = {
           fields: [
             'arthxbase',
             'bshbvstat',
+            'bshcvstat',
             'cd4nadir',
             'status',
             'virus_type',
