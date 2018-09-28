@@ -4,6 +4,7 @@ import { get, pick } from 'lodash';
 import { params } from '../data/parameters';
 import { paramByApp } from '../data/dictionaryHelper';
 import columnsToGraphql from '@arranger/mapping-utils/dist/utils/columnsToGraphql';
+import merge from '../src/helpers/mergeHelper';
 
 const tokenHeaders = (csrf, authToken) => {
   return { 'X-CSRF-Token': csrf, 'Authorization': `bearer ${authToken}` };
@@ -95,7 +96,8 @@ export const api = ({ endpoint = '', body, headers }) => {
 
     (jsonList) => {
       console.log('jsonList', jsonList);
-      return _.merge({}, ...jsonList);
+      console.log('mergeHelper', merge(...jsonList))
+      return merge(...jsonList);
     }
   );
 };

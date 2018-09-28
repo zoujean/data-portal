@@ -101,5 +101,7 @@ function test() {
   );
 }
 
+export default merge;
+
 
 //test();
