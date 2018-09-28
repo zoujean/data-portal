@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Button from '@gen3/ui-component/dist/components/Button';
+
 const DOWNLOAD_BTN_CAPTION = 'Download';
 
 function fileTypeTransform(type) {
