@@ -15,7 +15,7 @@ let urls = {
 };
 
 let projects = [
-  'bhc',
+  'dcp',
   'dcp',
 ];
 
