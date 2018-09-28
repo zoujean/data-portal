@@ -1,7 +1,7 @@
 import React from 'react';
 import querystring from 'querystring';
 import PropTypes from 'prop-types'; // see https://github.com/facebook/prop-types#prop-types
-
+import Button from '@gen3/ui-component/dist/components/Button';
 import { basename } from '../localconf';
 import SlidingWindow from '../components/SlidingWindow';
 import './Login.less';
@@ -72,9 +72,7 @@ class Login extends React.Component {
               p => (
                 <div key={p.id} className='login-page__entries'>
                   <a href={`${p.url}?redirect=${window.location.origin}${next}`}>
-                    <button className='button-primary-orange'>
-                      {p.name}
-                    </button>
+                    <Button buttonType='primary' label={p.name} />
                   </a>
                 </div>
               ),

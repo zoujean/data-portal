@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Button from '@gen3/ui-component/dist/components/Button';
 import IconComponent from './Icon';
 import './IndexButtonBar.less';
 
@@ -28,20 +29,18 @@ class IndexButtonBar extends Component {
                 {
                   item.link.startsWith('http') ?
                     <a className='index-button-bar__item' href={item.link}>
-                      <button
-                        className='button-primary-orange'
+                      <Button
                         onClick={() => this.props.onActiveTab(item.link)}
-                      >
-                        {item.label}
-                      </button>
+                        label={item.label}
+                        buttonType='primary'
+                      />
                     </a> :
                     <Link className='index-button-bar__item' to={item.link}>
-                      <button
-                        className='button-primary-orange'
+                      <Button
                         onClick={() => this.props.onActiveTab(item.link)}
-                      >
-                        {item.label}
-                      </button>
+                        label={item.label}
+                        buttonType='primary'
+                      />
                     </Link>
                 }
               </div>

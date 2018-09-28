@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@gen3/ui-component/dist/components/Button';
 import { createNodesAndEdges } from './utils';
 import SvgGraph from './SvgGraph';
 import './DataModelGraph.less';
@@ -35,12 +36,12 @@ class DataModelGraph extends React.Component {
     if (graph.nodes.length !== 0 && 'count' in graph.nodes[graph.nodes.length - 1]) {
       return (
         <div className='data-model-graph'>
-          <button
+          <Button
             id='cd-dmg__toggle'
-            className='button-primary-white'
+            label='Toggle View'
+            buttonType='secondary'
             onClick={this.handleToggleClick}
-          >Toggle view
-          </button>
+          />
           <SvgGraph nodes={graph.nodes} edges={graph.edges} />
         </div>
       );

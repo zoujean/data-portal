@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-
+import Button from '@gen3/ui-component/dist/components/Button';
 const DOWNLOAD_BTN_CAPTION = 'Download';
 
 function fileTypeTransform(type) {
@@ -55,9 +55,10 @@ class CoreMetadataHeader extends Component {
 
         downloadButton = (
           <a href={downloadLink}>
-            <button className='button-primary-orange'>
-              {DOWNLOAD_BTN_CAPTION}
-            </button>
+            <Button
+              buttonType='primary'
+              label={DOWNLOAD_BTN_CAPTION}
+            />
           </a>);
       }
 

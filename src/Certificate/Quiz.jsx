@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Form } from 'react-form';
 import PropTypes from 'prop-types';
+import Button from '@gen3/ui-component/dist/components/Button';
 import Question from './Question';
-import './Quiz.less';
 
 /**
  * Little quiz component - roperites: questionList, title, onSubmit
@@ -71,7 +71,6 @@ class Quiz extends Component {
           validate={values => this.validateForm(values)}
           defaultValues={this.props.certificate.certificate_result}
         >
-
           {({ submitForm }) => (
             <form>
               {
@@ -86,7 +85,10 @@ class Quiz extends Component {
                     />),
                 )
               }
-              <button className='quiz__submit-button' type='button' onClick={() => { submitForm(); this.showError(); }}>Submit</button>
+              <Button
+                label='Submit'
+                onClick={() => { submitForm(); this.showError(); }}
+              />
             </form>
           )}
         </Form>

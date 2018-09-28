@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'; // see https://github.com/facebook/prop-types#prop-types
+import Button from '@gen3/ui-component/dist/components/Button';
 import './Analysis.less';
 
 const AnalysisApp = ({ app, submitJob, job }) => {
@@ -16,7 +17,10 @@ const AnalysisApp = ({ app, submitJob, job }) => {
       <p>{app.description}</p>
       <form onSubmit={onSubmitJob}>
         <input className='text-input' type='text' placeholder='input data' name='input' />
-        <button href='#' className='button button-primary-orange' onSubmit={onSubmitJob} >Run simulation</button>
+        <Button
+          type='submit'
+          label='Run simulation'
+        />
       </form>
       {isJobRunning() &&
         <p className='analysis__job-status'>Job running... </p>

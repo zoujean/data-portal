@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import Button from '@gen3/ui-component/dist/components/Button';
 import { assignNodePositions, createNodesAndEdges } from '../DataModelGraph/utils';
 import { createFullGraph, createAbridgedGraph } from './GraphCreator';
 
@@ -74,11 +74,12 @@ class DictionaryGraph extends React.Component {
           <span style={{ fontWeight: 'bold', fontStyle: 'italic' }}> Bold, italicized</span> properties are required
         </p>
         <div style={divStyle} id='graph_wrapper'>
-          <button
+          <Button
             id='toggle_button'
-            className='button-primary-white'
+            label='Toggle View'
+            buttonType='secondary'
             onClick={this.handleClick}
-          >Toggle view</button>
+          />
           <div>
             <svg id='data_model_graph' />
           </div>

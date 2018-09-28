@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '@gen3/ui-component/dist/components/Button';
 import OneOfInput from './OneOfInput';
 import EnumInput from './EnumInput';
 import AnyOfInput from './AnyOfInput';
@@ -83,9 +84,13 @@ const SubmitNodeForm = ({
           onChange={onChange}
         />);
     })}
-    <button type='submit' value='Submit' className='button-primary-white submit-node-form__upload-form-button'>
-        Upload submission json from form
-    </button>
+    <Button
+      type='submit'
+      value='Submit'
+      buttonType='secondary'
+      className='submit-node-form__upload-form-button'
+      label='Upload submission json from form'
+    />
     </form>
   </div>
 );
