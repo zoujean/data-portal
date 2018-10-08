@@ -107,5 +107,65 @@
   },
   "featureFlags": {
     "explorer": true
+  },
+  "arrangerConfig": {
+    "charts": {
+      "project_id": {
+        "chartType": "count",
+        "title": "Projects"
+      },
+      "submitter_id": {
+        "chartType": "count",
+        "title": "Demographics"
+      },
+      "gender": {
+        "chartType": "pie",
+        "title": "Gender"
+      },
+      "race": {
+        "chartType": "bar",
+        "title": "Race"
+      },
+      "ethnicity": {
+        "chartType": "bar",
+        "title": "Ethnicity"
+      }
+    },
+    "filters": {
+      "tabs": [
+        {
+          "title": "demographic",
+          "fields":[
+            "project_id",
+            "gender",
+            "race",
+            "ethnicity"
+          ]
+        }
+      ]
+    },
+    "table": {
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "data",
+          "title": "Download Clinical",
+          "leftIcon": "user",
+          "rightIcon": "download",
+          "fileName": "clinical.json"
+        },
+        {
+          "enabled": false,
+          "type": "manifest",
+          "title": "Download Manifest",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "manifest.json"
+        }
+      ]
+    },
+    "projectId": "search",
+    "graphqlField": "demographic",
+    "index": ""
   }
 }
