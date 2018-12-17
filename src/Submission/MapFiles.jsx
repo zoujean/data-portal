@@ -7,6 +7,7 @@ import BackLink from '../components/BackLink';
 import StickyToolbar from '../components/StickyToolbar';
 import CheckBox from '../components/CheckBox';
 import StatusReadyIcon from '../img/icons/status_ready.svg';
+import calculateFileSize from './utils.js';
 import './MapFiles.less';
 
 class MapFiles extends React.Component {
@@ -14,7 +15,7 @@ class MapFiles extends React.Component {
     super(props);
     this.state = {
       selectedFilesByGroup: {},
-      unselectedFilesByGroup: {},
+      allFilesByGroup: {},
       filesByDate: {},
       isScrolling: false,
     };
@@ -55,7 +56,7 @@ class MapFiles extends React.Component {
 
   setMapValue = (map, index, value) => {
     const tempMap = map;
-    tempMap[index] = value;
+    tempMap[index] = new Set(value);
     return tempMap;
   }
 
@@ -76,9 +77,9 @@ class MapFiles extends React.Component {
   }
 
   isSelectAll = (index) => {
-    if (this.state.unselectedFilesByGroup[index]) {
-      return this.state.unselectedFilesByGroup[index].size === 0 &&
-      this.state.selectedFilesByGroup[index].size > 0;
+    if (this.state.selectedFilesByGroup[index]) {
+      return this.state.allFilesByGroup[index].size === this.state.selectedFilesByGroup[index].size
+        && this.state.selectedFilesByGroup[index].size > 0;
     }
     return false;
   }
@@ -111,7 +112,7 @@ class MapFiles extends React.Component {
       selectedMap[index] = new Set();
       index += 1;
     });
-    this.setState({ unselectedFilesByGroup: unselectedMap, selectedFilesByGroup: selectedMap });
+    this.setState({ allFilesByGroup: unselectedMap, selectedFilesByGroup: selectedMap });
   }
 
   sortUnmappedFiles = () => {
@@ -131,46 +132,31 @@ class MapFiles extends React.Component {
     if (this.isSelected(index, file)) {
       this.setState({
         selectedFilesByGroup: this.removeFromMap(this.state.selectedFilesByGroup, index, file),
-        unselectedFilesByGroup: this.addToMap(this.state.unselectedFilesByGroup, index, file),
       });
     } else if (this.isFileReady(file)) { // file status == ready, so it is selectable
       this.setState({
         selectedFilesByGroup: this.addToMap(this.state.selectedFilesByGroup, index, file),
-        unselectedFilesByGroup: this.removeFromMap(this.state.unselectedFilesByGroup, index, file),
       });
     }
   }
 
   toggleSelectAll = (index) => {
-    if (this.state.unselectedFilesByGroup[index]) {
-      if (this.state.unselectedFilesByGroup[index].size === 0) {
+    if (this.state.selectedFilesByGroup[index]) {
+      if (this.state.selectedFilesByGroup[index].size === this.state.allFilesByGroup[index].size) {
         this.setState({
-          unselectedFilesByGroup:
-            this.setMapValue(
-              this.state.unselectedFilesByGroup,
-              index,
-              this.state.selectedFilesByGroup[index],
-            ),
           selectedFilesByGroup: this.setMapValue(this.state.selectedFilesByGroup, index, new Set()),
         });
-      } else { // only select "ready" files
-        const newFiles = this.state.selectedFilesByGroup[index];
-        const unselectedFiles = this.state.unselectedFilesByGroup[index];
-        this.state.unselectedFilesByGroup[index].forEach((file) => {
-          newFiles.add(file);
-          unselectedFiles.delete(file);
-        });
+      } else {
+        const newFiles = this.state.allFilesByGroup[index];
         this.setState({
           selectedFilesByGroup: this.setMapValue(this.state.selectedFilesByGroup, index, newFiles),
-          unselectedFilesByGroup: this.setMapValue(
-            this.state.unselectedFilesByGroup, index, unselectedFiles,
-          ),
         });
       }
     }
   }
 
-  isFileReady = file => true
+  isFileReady = file => file.hashes && Object.keys(file.hashes).length > 0;
+
 
   render() {
     const buttons = [
@@ -241,14 +227,16 @@ class MapFiles extends React.Component {
                                   item={file}
                                   isSelected={this.isSelected(i, file)}
                                   onChange={() => this.toggleCheckBox(i, file)}
+                                  isEnabled={status === 'Ready'}
+                                  disabledText={'This file is not ready to be mapped yet.'}
                                 />
                               </td>
                               <td>{file.file_name}</td>
-                              <td>{file.size ? file.size : 0}B</td>
+                              <td>{file.size ? calculateFileSize(file.size) : '0B'}</td>
                               <td>{moment(file.created_date).format('MM/DD/YY, hh:mm:ss a Z')}</td>
                               <td className={`map-files__status--${status.toLowerCase()}`}>
                                 { status === 'Ready' ? <StatusReadyIcon /> : null }
-                                <div className='h2-typo'>{status}</div>
+                                <div className='h2-typo'>{ status === 'Ready' ? status : `${status}...`}</div>
                               </td>
                             </tr>
                           );
