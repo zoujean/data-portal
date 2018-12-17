@@ -212,7 +212,7 @@ class MapFiles extends React.Component {
                         </th>
                         <th>File Name</th>
                         <th>Size</th>
-                        <th>Uploaded date</th>
+                        <th>Uploaded Date</th>
                         <th>Status</th>
                       </tr>
                       {
@@ -232,7 +232,7 @@ class MapFiles extends React.Component {
                               </td>
                               <td>{file.file_name}</td>
                               <td>{file.size ? calculateFileSize(file.size) : '0B'}</td>
-                              <td>{moment(file.created_date).format('MM/DD/YY, hh:mm:ss a Z')}</td>
+                              <td>{moment(file.created_date).format('MM/DD/YY, hh:mm:ss a [UTC]Z')}</td>
                               <td className={`map-files__status--${status.toLowerCase()}`}>
                                 { status === 'Ready' ? <StatusReadyIcon /> : null }
                                 <div className='h2-typo'>{ status === 'Ready' ? status : `${status}...`}</div>
