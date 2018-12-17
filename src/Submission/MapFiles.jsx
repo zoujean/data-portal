@@ -211,7 +211,7 @@ class MapFiles extends React.Component {
                           />
                         </th>
                         <th>File Name</th>
-                        <th>Size</th>
+                        <th style={{ width: '100px' }}>Size</th>
                         <th>Uploaded Date</th>
                         <th>Status</th>
                       </tr>
