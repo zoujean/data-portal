@@ -42,6 +42,7 @@ const plugins = [
   }),
   new webpack.optimize.DedupePlugin(), //dedupe similar code
   new webpack.optimize.AggressiveMergingPlugin(), //Merge chunks
+  new webpack.optimize.UglifyJsPlugin(),
 ];
 
 if (process.env.NODE_ENV !== 'dev' && process.env.NODE_ENV !== 'auto' ) {
