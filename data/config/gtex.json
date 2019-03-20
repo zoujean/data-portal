@@ -31,7 +31,7 @@
     "projectDetails": "boardCounts"
   },
   "components": {
-    "appName": "NIH Data Commons Consortium Pilot Phase\nNHLBI Data STAGE\nGTEx & TOPMed Data Portal",
+    "appName": "NHLBI Data STAGE",
     "index": {
       "introduction": {
         "heading": "Data STAGE",
@@ -139,6 +139,10 @@
         "chartType": "count",
         "title": "Cases"
       },
+      "file_id": {
+        "chartType": "count",
+        "title": "Files"
+      },
       "gender": {
         "chartType": "pie",
         "title": "Gender"
@@ -146,8 +150,7 @@
       "race": {
         "chartType": "bar",
         "title": "Race"
-      },
-      "fileCounts": true
+      }
     },
     "filters": {
       "tabs": [
