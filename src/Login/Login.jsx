@@ -3,6 +3,7 @@ import querystring from 'querystring';
 import PropTypes from 'prop-types'; // see https://github.com/facebook/prop-types#prop-types
 import MediaQuery from 'react-responsive';
 import Button from '@gen3/ui-component/dist/components/Button';
+import Dropdown from '@gen3/ui-component/dist/components/Dropdown';
 import { basename, loginPath, breakpoints } from '../localconf';
 import { components } from '../params';
 
@@ -18,15 +19,65 @@ const shouldDisplayInCommonOptions = url =>
   // for example NIH.
   url.includes('/login/fence') && !url.includes('idp=');
 
-
 const getLoginUrl = (baseLoginUrl, next, shibIdp = null) => {
   let queryParams = baseLoginUrl.includes('?') ? '&' : '?';
   queryParams += `redirect=${window.location.origin}${next}`;
-  if (shouldDisplayInCommonOptions(baseLoginUrl)) {
+  if (shibIdp && shouldDisplayInCommonOptions(baseLoginUrl)) {
     // Fence multi-tenant/InCommon login
     queryParams += `&idp=shibboleth&shib_idp=${shibIdp}`;
   }
   return baseLoginUrl + queryParams;
+};
+
+const getInCommonOptions = () => {
+  // TODO url should be in config
+  // fetch("https://login.bionimbus.org/Shibboleth.sso/DiscoFeed")
+  const discofeedRes = [
+    {
+      entityID: 'urn:mace:incommon:uchicago.edu',
+      DisplayNames: [
+        {
+          value: 'University of Chicago',
+          lang: 'en',
+        },
+      ],
+    },
+    {
+      entityID: 'https://shibboleth.umich.edu/idp/shibboleth',
+      DisplayNames: [
+        {
+          value: 'University of Michigan',
+          lang: 'en',
+        },
+      ],
+    },
+    {
+      entityID: 'https://shib.ou.edu/idp/shibboleth',
+      DisplayNames: [
+        {
+          value: 'Université d\'Oklahoma',
+          lang: 'fr',
+        },
+        {
+          value: 'University of Oklahoma',
+          lang: 'en',
+        },
+      ],
+    },
+    {
+      entityID: 'urn:mace:incommon:nih.gov',
+      DisplayNames: [
+        {
+          value: 'National Institutes of Health',
+          lang: 'en',
+        },
+      ],
+    },
+  ];
+  return discofeedRes.map(e => ({
+    shibIdp: e.entityID,
+    title: e.DisplayNames[0].value, // TODO: always get english, or first value if no english
+  }));
 };
 
 class Login extends React.Component {
@@ -83,8 +134,6 @@ class Login extends React.Component {
       components.login.image
       : 'gene';
 
-    const shibIdp = 'https://shib.ou.edu/idp/shibboleth';
-
     return (
       <div className='login-page'>
         <MediaQuery query={`(min-width: ${breakpoints.tablet + 1}px)`}>
@@ -109,24 +158,38 @@ class Login extends React.Component {
           {
             this.props.providers.map(
               (p, i) => (
-                <React.Fragment>
-                  {/* {
-                    shouldDisplayInCommonOptions(p.url) && (
-                      <Button
-                        label={'idp here'}
-                      />
-                    )
-                  } */}
+                <React.Fragment key={i}>
                   {
-                    <Button
-                      key={i}
-                      className='login-page__entries'
-                      onClick={() => {
-                        window.location.href = getLoginUrl(p.url, next, shibIdp);
-                      }}
-                      label={p.name}
-                      buttonType='primary'
-                    />
+                    shouldDisplayInCommonOptions(p.url) ? (
+                      <Dropdown>
+                        <Dropdown.Button>{p.name}</Dropdown.Button>
+                        <Dropdown.Menu>
+                          {
+                            getInCommonOptions().map((btnCfg, j) => (
+                              <Dropdown.Item
+                                key={j}
+                                onClick={() => {
+                                  window.location.href = getLoginUrl(p.url, next, btnCfg.shibIdp);
+                                }}
+                              >
+                                {btnCfg.title}
+                              </Dropdown.Item>
+                            ))
+                          }
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )
+                      :
+                      (
+                        <Button
+                          className='login-page__entries'
+                          onClick={() => {
+                            window.location.href = getLoginUrl(p.url, next);
+                          }}
+                          label={p.name}
+                          buttonType='primary'
+                        />
+                      )
                   }
                 </React.Fragment>
               ),
