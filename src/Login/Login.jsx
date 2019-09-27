@@ -11,6 +11,24 @@ import './Login.less';
 
 const getInitialState = height => ({ height });
 
+const shouldDisplayInCommonOptions = url =>
+  // If not logging in through another fence or if an IDP is already specified
+  // in the URL, do not ask the user to choose which IDP to login with.
+  // This way, we can configure a login button to be specific to an IDP,
+  // for example NIH.
+  url.includes('/login/fence') && !url.includes('idp=');
+
+
+const getLoginUrl = (baseLoginUrl, next, shibIdp = null) => {
+  let queryParams = baseLoginUrl.includes('?') ? '&' : '?';
+  queryParams += `redirect=${window.location.origin}${next}`;
+  if (shouldDisplayInCommonOptions(baseLoginUrl)) {
+    // Fence multi-tenant/InCommon login
+    queryParams += `&idp=shibboleth&shib_idp=${shibIdp}`;
+  }
+  return baseLoginUrl + queryParams;
+};
+
 class Login extends React.Component {
   static propTypes = {
     providers: PropTypes.arrayOf(
@@ -65,6 +83,8 @@ class Login extends React.Component {
       components.login.image
       : 'gene';
 
+    const shibIdp = 'https://shib.ou.edu/idp/shibboleth';
+
     return (
       <div className='login-page'>
         <MediaQuery query={`(min-width: ${breakpoints.tablet + 1}px)`}>
@@ -89,15 +109,26 @@ class Login extends React.Component {
           {
             this.props.providers.map(
               (p, i) => (
-                <Button
-                  key={i}
-                  className='login-page__entries'
-                  onClick={() => {
-                    window.location.href = `${p.url}?redirect=${window.location.origin}${next}`;
-                  }}
-                  label={p.name}
-                  buttonType='primary'
-                />
+                <React.Fragment>
+                  {/* {
+                    shouldDisplayInCommonOptions(p.url) && (
+                      <Button
+                        label={'idp here'}
+                      />
+                    )
+                  } */}
+                  {
+                    <Button
+                      key={i}
+                      className='login-page__entries'
+                      onClick={() => {
+                        window.location.href = getLoginUrl(p.url, next, shibIdp);
+                      }}
+                      label={p.name}
+                      buttonType='primary'
+                    />
+                  }
+                </React.Fragment>
               ),
             )
           }
