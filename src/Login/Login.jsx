@@ -159,6 +159,7 @@ class Login extends React.Component {
             this.props.providers.map(
               (p, i) => (
                 <React.Fragment key={i}>
+                  {p.desc}
                   {
                     shouldDisplayInCommonOptions(p.url) ? (
                       <Dropdown>
@@ -181,17 +182,14 @@ class Login extends React.Component {
                     )
                       :
                       (
-                        <div>
-                          {p.desc}
-                          <Button
-                            className='login-page__entries'
-                            onClick={() => {
-                              window.location.href = getLoginUrl(p.url, next);
-                            }}
-                            label={p.name}
-                            buttonType={p.secondary ? 'default' : 'primary'}
-                          />
-                        </div>
+                        <Button
+                          className='login-page__entries'
+                          onClick={() => {
+                            window.location.href = getLoginUrl(p.url, next);
+                          }}
+                          label={p.name}
+                          buttonType={p.secondary ? 'default' : 'primary'}
+                        />
                       )
                   }
                 </React.Fragment>
