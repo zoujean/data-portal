@@ -181,14 +181,17 @@ class Login extends React.Component {
                     )
                       :
                       (
-                        <Button
-                          className='login-page__entries'
-                          onClick={() => {
-                            window.location.href = getLoginUrl(p.url, next);
-                          }}
-                          label={p.name}
-                          buttonType='primary'
-                        />
+                        <div>
+                          {p.desc}
+                          <Button
+                            className='login-page__entries'
+                            onClick={() => {
+                              window.location.href = getLoginUrl(p.url, next);
+                            }}
+                            label={p.name}
+                            buttonType={p.secondary ? 'default' : 'primary'}
+                          />
+                        </div>
                       )
                   }
                 </React.Fragment>
