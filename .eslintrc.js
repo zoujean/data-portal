@@ -56,6 +56,8 @@ module.exports = {
         "src/GraphUtils/utils.test.js",
         "src/actions.js",
         "data/getSchema.js",
+        "data/fetchShibboleth.js",
+        "data/utils.js",
         "data/getTexts.js",
         "data/gqlSetup.js",
         "src/SessionMonitor/index.js",
@@ -115,7 +117,7 @@ module.exports = {
       }
     },
     {
-      "files": [ "data/getSchema.js" ],
+      "files": [ "data/getSchema.js", "data/utils.js" ],
       "rules": {
         "func-names": "off" // for schema
       }

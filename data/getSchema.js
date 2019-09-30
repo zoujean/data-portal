@@ -6,14 +6,12 @@
  * Ex: https://dev.bionimbus.org/api/v0/submission/getschema
  *     https://dev.bionimbus.org/api/v0/submission/_dictionary/_all
  */
-const https = require('https');
-const http = require('http');
-const fetch = require('node-fetch');
 const fs = require('fs');
 const {
   buildClientSchema,
   printSchema,
 } = require('graphql/utilities/index');
+const { fetchJson } = require('./utils');
 
 const { gdcSubPath } = (function () {
   function addSlash(path) { return (`${path}/`).replace(/\/+$/, '/'); }
@@ -56,76 +54,6 @@ const schemaUrl = `${gdcSubPath}getschema`;
 const schemaPath = `${__dirname}/schema.json`;
 const dictUrl = `${gdcSubPath}_dictionary/_all`;
 const dictPath = `${__dirname}/dictionary.json`;
-const httpAgent = new http.Agent({
-  rejectUnauthorized: false,
-});
-const httpsAgent = new https.Agent({
-  rejectUnauthorized: false,
-});
-
-const retryBackoff = [2000, 4000, 8000, 16000];
-
-/**
- * Wrapper around fetch - retries call on 429 status
- * up to 4 times with exponential backoff
- *
- * @param {string} urlStr
- * @param {*} opts
- */
-async function fetchJsonRetry(urlStr, opts) {
-  let retryCount = 0;
-  let doRequest = null; // for eslint happiness
-
-  async function doRetry(reason) {
-    if (retryCount > retryBackoff.length) {
-      return Promise.reject(`failed fetch ${reason}, max retries ${retryBackoff.length} exceeded for ${urlStr}`);
-    }
-
-    return new Promise(((resolve) => {
-      // sleep and try again ...
-      const retryIndex = Math.min(retryCount, retryBackoff.length - 1);
-      const sleepMs = retryBackoff[retryIndex] + Math.floor(Math.random() * 2000);
-      retryCount += 1;
-      console.log(`failed fetch - ${reason}, sleeping ${sleepMs} then retry ${urlStr}`);
-      setTimeout(() => {
-        resolve('ok');
-        console.log(`Retrying ${urlStr} after sleep - ${retryCount}`);
-      }, sleepMs);
-    })).then(doRequest);
-  }
-
-  doRequest = async function () {
-    if (retryCount > 0) {
-      console.log(`Re-fetching ${urlStr} - retry no ${retryCount}`);
-    }
-    return fetch(urlStr, opts,
-    ).then(
-      (res) => {
-        if (res.status === 200) {
-          return res.json().catch(
-            err => doRetry(`failed json parse - ${err}`),
-          );
-        }
-        return doRetry(`non-200 from server: ${res.status}`);
-      },
-      err => doRetry(err),
-    );
-  };
-
-  return doRequest();
-}
-
-async function fetchJson(url) {
-  console.log(`Fetching ${url}`);
-  return fetchJsonRetry(url, {
-    agent: url.match(/^https:/) ? httpsAgent : httpAgent,
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
-}
 
 const actionList = [];
 
@@ -158,3 +86,7 @@ Promise.all(actionList).then(
     process.exit(2);
   },
 );
+
+module.exports = {
+  fetchJson,
+};

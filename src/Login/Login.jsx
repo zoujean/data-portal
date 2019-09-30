@@ -10,6 +10,8 @@ import { components } from '../params';
 import SlidingWindow from '../components/SlidingWindow';
 import './Login.less';
 
+import * as shibboleth from '../../data/shibboleth.json';
+
 const getInitialState = height => ({ height });
 
 const shouldDisplayInCommonOptions = url =>
@@ -29,56 +31,10 @@ const getLoginUrl = (baseLoginUrl, next, shibIdp = null) => {
   return baseLoginUrl + queryParams;
 };
 
-const getInCommonOptions = () => {
-  // TODO url should be in config
-  // fetch("https://login.bionimbus.org/Shibboleth.sso/DiscoFeed")
-  const discofeedRes = [
-    {
-      entityID: 'urn:mace:incommon:uchicago.edu',
-      DisplayNames: [
-        {
-          value: 'University of Chicago',
-          lang: 'en',
-        },
-      ],
-    },
-    {
-      entityID: 'https://shibboleth.umich.edu/idp/shibboleth',
-      DisplayNames: [
-        {
-          value: 'University of Michigan',
-          lang: 'en',
-        },
-      ],
-    },
-    {
-      entityID: 'https://shib.ou.edu/idp/shibboleth',
-      DisplayNames: [
-        {
-          value: 'Université d\'Oklahoma',
-          lang: 'fr',
-        },
-        {
-          value: 'University of Oklahoma',
-          lang: 'en',
-        },
-      ],
-    },
-    {
-      entityID: 'urn:mace:incommon:nih.gov',
-      DisplayNames: [
-        {
-          value: 'National Institutes of Health',
-          lang: 'en',
-        },
-      ],
-    },
-  ];
-  return discofeedRes.map(e => ({
-    shibIdp: e.entityID,
-    title: e.DisplayNames[0].value, // TODO: always get english, or first value if no english
-  }));
-};
+const getInCommonOptions = () => shibboleth.map(e => ({
+  shibIdp: e.entityID,
+  title: e.DisplayNames[0].value, // TODO: always get english, or first value if no english
+}));
 
 class Login extends React.Component {
   static propTypes = {

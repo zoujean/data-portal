@@ -137,6 +137,8 @@ bash custom/customize.sh
 
 # download the graphql schema for the commons from HOSTNAME
 npm run schema
+# download the list of available InCommon IDPs
+npm run fetchShibboleth
 # run the relay compiler against the graphql schema
 npm run relay
 # generate a parameters.json file by overlaying $APP.json on default.json
