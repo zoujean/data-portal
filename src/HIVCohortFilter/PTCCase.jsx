@@ -161,6 +161,7 @@ class PTCCase extends HIVCohortFilterCase {
       const subjectWithVisits = {
         subject_id: subjectId,
         stop_treatments_maintain_viral_load_at_followup: 'N/A',
+        all_maintain_viral_load_at_followup: [],
         visits: visitArray,
       };
 
@@ -198,6 +199,15 @@ class PTCCase extends HIVCohortFilterCase {
                       = visitArray[(i + slidingWindowSize) - 1].submitter_id;
             subjectWithVisits.stop_treatments_maintain_viral_load_at_followup
                       = theNextVisit.submitter_id;
+            for (let j = i + slidingWindowSize; j < visitArray.length; j += 1){
+              const nvloadCheck = (visitArray[j].viral_load > this.state.viralLoadFromUser);
+              const ntherapyCheck = this.state.therapyValuesOfInterest.includes(visitArray[j].thrpyv);
+              if (nvloadCheck || ntherapyCheck){
+                break;
+              }else{
+                subjectWithVisits.all_maintain_viral_load_at_followup.append(visitArray[j].submitter_id)
+              }
+            }
             subjectPTC.push(subjectWithVisits);
           } else {
             // Found control!
